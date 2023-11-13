@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Document</title>
+  <style>
+    body {
+      background-color: rgba(38, 237, 88, 0.767);
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      flex-direction: row;
+      margin: 0 auto;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center center;
+      background-attachment: fixed;
+    }
+
+    .section {
+      background: #33333386;
+      width: auto;
+      display: block;
+      border-radius: 10px;
+      border: solid 1px black;
+      box-shadow: 2px 2px 2px #00000080, 10px 1px 12px #00000080,
+        2px 2px 3px #00000080, inset 2px 2px 10px #00000080;
+      padding: 1rem;
+      margin: 5px;
+      font-family: Verdana;
+      transition: width 3sec ease-in-out;
+    }
+
+    .section:first-child:hover {
+      padding: 1.5rem;
+      font-size: 24px;
+    }
+
+    .sec1 {
+      justify-content: space-around;
+    }
+
+    .header {
+      background-color: green;
+      top: 10px;
+      padding: 1rem;
+    }
+
+    .section:last-child {
+      background-color: rgba(89, 0, 255, 0.273);
+      float: right;
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      height: 4rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      flex-direction: column;
+      padding-bottom: 0px;
+      border-radius: 0;
+      border-top-left-radius: 29px;
+      border-bottom-right-radius: 29px;
+      width: 3rem;
+      transition: width 3s ease-in-out;
+    }
+
+    .section:last-child:hover {
+      background-color: rgb(35, 137, 69);
+      width: auto;
+    }
+
+    .section:last-child p {
+      float: right;
+      color: azure;
+      font-weight: bold;
+      font-family: tp mono;
+      display: none;
+    }
+
+    .section:last-child:hover p {
+      display: block;
+    }
+
+    .resume-logo {
+      color: aqua;
+      float: right;
+      position: fixed;
+      margin: 0;
+    }
+
+    .menu {
+      background-color: #4814cc80;
+      display: flex;
+      width: 2.5rem;
+      height: 2.5rem;
+      float: right;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .bar {
+      width: 1.5rem;
+      height: 0.1rem;
+      background-color: rgb(249, 247, 247);
+      margin: 3px;
+    }
+
+    .menu-content {
+      display: none;
+      float: right;
+      flex-wrap: wrap;
+    }
+
+    .menu-content.show {
+      display: block;
+    }
+
+    .menu-content li {
+      background-color: green;
+      text-decoration: none;
+      list-style: none;
+      width: 100% auto;
+      height: auto;
+      border: solid 1px rgba(59, 179, 16, 0.655);
+      text-align: center;
+      flex-wrap: wrap;
+      color: white;
+    }
+
+    .menu-content a {
+      text-decoration: none;
+    }
+
+    .box {
+      background: rgba(243, 240, 240, 0.607);
+      padding: 1rem;
+      margin: 5px;
+      display: block;
+      justify-content: space-around;
+      border-radius: 10px;
+      border: solid 1px black;
+      box-shadow: 2px 2px 2px #00000080, 10px 1px 12px #00000080,
+        2px 2px 3px #00000080, inset 2px 2px 10px #00000080;
+      border-radius: 29px;
+      max-width: 30rem;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .box:hover {
+      border-color: red;
+      padding: 1.5rem;
+      font-size: 24px;
+    }
+
+    .box:not(:hover) {
+      padding: 1rem;
+      height: min-content;
+    }
+
+    h3,
+    h5 {
+      color: #000;
+      font-weight: normal;
+      font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+        sans-serif;
+    }
+
+    .footer {
+      background: #33333386;
+      width: auto;
+      display: block;
+      border-radius: 10px;
+      border: solid 1px black;
+      box-shadow: 2px 2px 2px #00000080, 10px 1px 12px #00000080,
+        2px 2px 3px #00000080, inset 2px 2px 10px #00000080;
+      padding: 1rem;
+      margin: 5px;
+      font-family: Verdana;
+      transition: width 3sec ease-in-out;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <div class="menu" onclick="toggleMenu()">
+      <div class="bar"></div>
+      <div class="bar" style="width: 1rem"></div>
+      <div class="bar" style="width: 1.5rem"></div>
+    </div>
+    <div class="menu-content" id="menuContent">
+      <ul>
+        <li><a href="#">Profile.</a></li>
+        <li><a href="#">Register to updates.</a></li>
+        <li><a href="#">Contact us.</a></li>
+        <li><a href="#">About.</a></li>
+      </ul>
+    </div>
+    <h1>KAVA</h1>
+    <h4>Kenya Agricultural Virtual Assistant</h4>
+  </div>
+  <br />
+  <div class="container">
+    <div class="sec1">
+      <div class="section">
+        <h3>KENYA AGRICULTURAL VIRTUAL ASSISTANT</h3>
+        INTRODUCTION:
+        <h5>
+          Welcome to our innovative agricultural platform, where cutting-edge
+          AI technology meets the rich soil of Kenyan farms. Our mission is to
+          empower farmers with intelligent solutions, transforming traditional
+          agriculture into a smart and efficient ecosystem. You can interact
+          with our handy AI at the bottom of the screen for real time updates
+          and agricultural advice.
+        </h5>
+      </div>
+      <div class="container" style="background: url('static/img3.jpg')">
+        <div class="box">
+          <h3>Harnessing AI for Kenyan Farmers:</h3>
+          <h5>
+            Discover the future of farming with our AI-powered tools tailored
+            for the Kenyan agricultural landscape. From precision farming to
+            crop management, our platform is designed to enhance productivity,
+            reduce risks, and provide actionable insights for farmers across
+            Kenya.
+          </h5>
+        </div>
+        <div class="box">
+          <h3>Smart Farming Made Simple:</h3>
+          <h5>
+            Experience the simplicity of smart farming as our AI algorithms
+            analyze local data, weather patterns, and crop health. Our
+            user-friendly interface allows farmers to make informed decisions,
+            optimize resource utilization, and ultimately boost yields in a
+            sustainable manner.
+          </h5>
+        </div>
+        <div class="box">
+          <h3>Personalized Farming Assistance:</h3>
+          <h5>
+            Embrace personalized farming guidance with our AI-driven
+            assistance. Receive tailored recommendations for crop selection,
+            planting schedules, and pest control based on your specific
+            location and farm conditions. Let AI become your digital farming
+            companion.
+          </h5>
+        </div>
+        <div class="box">
+          <h3>Market Insights for Prosperous Sales:</h3>
+          <h5>
+            Navigate the agricultural market with confidence. Our AI analyzes
+            market trends, pricing data, and demand forecasts, empowering
+            farmers to make informed decisions when selling their produce.
+            Maximize profits and contribute to a thriving agricultural
+            community.
+          </h5>
+        </div>
+        <div class="box">
+          <h3>Community Collaboration and Knowledge Sharing:</h3>
+          <h5>
+            Join a community of forward-thinking farmers leveraging AI.
+            Connect, collaborate, and share experiences with fellow
+            agricultural enthusiasts. Our platform fosters a culture of
+            knowledge exchange, ensuring that every farmer benefits from the
+            collective wisdom of the community.
+          </h5>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <a href="{{ url_for('chat')}}"><span><svg width="60" height="52">
+            <path class="resume-logo"
+              d="M37 8M26 47.2c-3.9 0-7.6-1-11-3l-.7-.4-8.1 2L8.4 38l-.6-.8A21.4 21.4 0 0126 4.4a21.3 21.3 0 0121.4 21.4c0 11.8-9.6 21.4-21.4 21.4M44.2 "
+              fill="currentColor"></path>
+            <text x="15" y="34" font-size="20" font-weight="vold" fill="#000">
+              AI
+            </text>
+          </svg>
+          <p>Get assist from our Farm AI!</p>
+        </span></a>
+    </div>
+  </div>
+  <div class="footer">
+    <h3>We have partnered with the following organisations to enure you are served with the most accurate data.</h3>
+    <a href="#">a</a>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      var menuContent = document.getElementById("menuContent");
+      menuContent.classList.toggle("show");
+    }
+    !(function () {
+      try {
+        var d = document.documentElement,
+          c = d.classList;
+        c.remove("light", "dark");
+        var e = localStorage.getItem("theme");
+        if ("system" === e || (!e && true)) {
+          var t = "(prefers-color-scheme: dark)",
+            m = window.matchMedia(t);
+          if (m.media !== t || m.matches) {
+            d.style.colorScheme = "dark";
+            c.add("dark");
+          } else {
+            d.style.colorScheme = "light";
+            c.add("light");
+          }
+        } else if (e) {
+          c.add(e || "");
+        }
+        if (e === "light" || e === "dark") d.style.colorScheme = e;
+      } catch (e) { }
+    })();
+  </script>
+</body>
+
+</html>

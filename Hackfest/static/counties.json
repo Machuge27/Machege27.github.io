@@ -1,0 +1,19 @@
+{
+    "counties": [
+        {
+            "countyName": "Nairobi",
+            "sub-counties": [
+                {
+                    "sub-county": "Nairobi central",
+                    "wards": ["Ward A", "Ward B", "Ward C"]
+                },
+                {
+                    "sub-county": "Westlands",
+                    "wards": ["Ward X", "Ward Y", "Ward Z"]
+                }
+            ]
+            
+        }
+    ]
+}        
+                                    
