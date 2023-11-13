@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>chat</title>
+    <style>
+      body {
+        background-color: rgba(41, 142, 4, 0.685);
+      }
+
+      .bar {
+        width: 1.5rem;
+        height: 0.1rem;
+        margin-bottom: 3px;
+        background-color: black;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+      }
+
+      nav {
+        padding: 3px;
+      }
+
+      .header {
+        border: 1px solid gray;
+        display: flex;
+        padding: 5px;
+        flex-wrap: wrap;
+        flex-direction: column;
+        justify-content: space-between;
+        border-radius: 1rem;
+      }
+
+      select {
+        min-width: 20rem;
+        padding: 0.6rem;
+        background: rgba(255, 255, 255, 0.593);
+      }
+
+      .header a {
+        float: right;
+        text-decoration: none;
+      }
+
+      .prompts {
+        margin: 0.5rem;
+        font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+          sans-serif;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+
+      .prompts:first-child {
+        margin-right: 2rem;
+      }
+
+      .prompts:last-child {
+        margin-left: 2rem;
+      }
+
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        flex-direction: row;
+        font-family: "Raleway", sans-serif;
+        margin: 0 auto;
+      }
+
+      textarea {
+        min-width: 25rem;
+        height: 2rem;
+        resize: none;
+        overflow-y: hidden;
+        background-color: rgba(255, 255, 255, 0.751);
+        color: black;
+        font-size: bold;
+        margin: 1rem 0;
+        border-radius: 1rem;
+        border-style: none;
+        padding: 1rem;
+        flex-wrap: nowrap;
+        height: min-content;
+      }
+
+      .textArea {
+        width: 40rem;
+        display: flex;
+        align-items: flex-start;
+        flex-direction: row;
+        justify-content: space-between;
+
+        margin: 1rem;
+        border-style: none;
+      }
+
+      button[type="submit"] {
+        margin: 2rem 0;
+        padding: 0.7rem;
+        margin-left: 0;
+        background-color: rgb(253, 254, 252);
+        font-weight: bold;
+        color: black;
+        border-style: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="header">
+      <nav>
+        <a href="#">new &plus;</a>
+        <div class="bar"></div>
+        <div class="bar" style="width: 1rem"></div>
+        <div class="bar" style="width: 0.5rem"></div>
+      </nav>
+    </div>
+    <div class="prompts">
+      <p>
+        For efficient feedback from the Farm AI you should provide the relevant
+        information about your location and any description of your request
+        below:
+      </p>
+      <br />
+      <form
+        class="container"
+        method="POST"
+        action="{{ url_for('get_su_counties') }}"
+      >
+        <label for="county"
+          >County: <br />
+          <select id="county" name="county_code">
+            <option value="" disabled selected>Select your county</option>
+            {% for county in counties %}
+            <option value="{{ county['code'] }}">
+              {{ county['name'] }} ({{ county['code'] }})
+            </option>
+            {% endfor %}
+          </select>
+        </label>
+
+        <label for="sub_county"
+          >Sub-county: <br />
+          <select id="sub_county" name="sub_county_code" disabled>
+            <option value="" disabled selected>Select your sub-county</option>
+          </select>
+        </label>
+
+        <label for="ward"
+          >Ward: <br />
+          <select id="ward" name="ward_code" disabled>
+            <option value="" disabled selected>Select your ward</option>
+          </select>
+        </label>
+        <br />
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        // When County dropdown changes
+        $("#county").change(function () {
+          var selectedCounty = $(this).val();
+          if (selectedCounty) {
+            // Make an AJAX request to Flask backend
+            $.ajax({
+              url: "/get_sub_counties/" + selectedCounty,
+              type: "GET",
+              success: function (data) {
+                // Populate Sub-county dropdown with returned data
+                $("#sub_county").prop("disabled", false).empty();
+                $.each(data.sub_counties, function (key, value) {
+                  $("#sub_county").append(
+                    '<option value="' +
+                      value.code +
+                      '">' +
+                      value.name +
+                      "</option>"
+                  );
+                });
+              },
+              error: function () {
+                console.log("Error fetching sub-counties");
+              },
+            });
+          } else {
+            // If no County selected, disable Sub-county and Ward dropdowns
+            $("#sub_county, #ward").prop("disabled", true).empty();
+          }
+        });
+      });
+
+      function toggleMenu() {
+        var menuContent = document.getElementById("menuContent");
+        menuContent.classList.toggle("show");
+      }
+      !(function () {
+        try {
+          var d = document.documentElement,
+            c = d.classList;
+          c.remove("light", "dark");
+          var e = localStorage.getItem("theme");
+          if ("system" === e || (!e && true)) {
+            var t = "(prefers-color-scheme: dark)",
+              m = window.matchMedia(t);
+            if (m.media !== t || m.matches) {
+              d.style.colorScheme = "dark";
+              c.add("dark");
+            } else {
+              d.style.colorScheme = "light";
+              c.add("light");
+            }
+          } else if (e) {
+            c.add(e || "");
+          }
+          if (e === "light" || e === "dark") d.style.colorScheme = e;
+        } catch (e) {}
+      })();
+    </script>
+  </body>
+</html>
