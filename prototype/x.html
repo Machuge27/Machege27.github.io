@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Farmer Assistant System</title>
+    <style>
+      /* Your existing CSS styles */
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: url("static/images/img1.jpg") no-repeat center fixed;
+  background-size: cover;
+  height: 100vh;
+}
+
+/* Rest of your existing CSS styles */
+/* Add custom styling for login form */
+/* Main styles */
+.main {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Navbar styles */
+.navbar {
+  width: 100%;
+  height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.icon {
+  width: 200px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+}
+
+.icon a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 25px;
+  margin-right: 15px;
+}
+
+/* Menu styles */
+.menu ul {
+  list-style-type: none;
+  display: flex;
+  gap: 20px;
+}
+
+.menu ul li a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.menu ul li a:hover {
+  color: #ff7200;
+}
+
+/* Search bar styles */
+.search {
+  display: flex;
+  gap: 10px;
+}
+
+.srch {
+  padding: 10px;
+  border: 1px solid #ff7200;
+  border-radius: 5px;
+  background: transparent;
+  color: #fff;
+  font-size: 16px;
+  width: 180px;
+  transition: border-color 0.3s ease;
+}
+
+.srch:focus {
+  outline: none;
+  border-color: #ff7200;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ff7200;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #ff5f00;
+}
+
+/* Content styles */
+.content {
+  text-align: center;
+  color: #fff;
+  margin-top: 50px;
+}
+
+h1 {
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.par {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+/* Login form styles */
+.form {
+  width: 300px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+}
+
+.form h2 {
+  font-size: 22px;
+  color: #ff7200;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 8px;
+  margin-bottom: 20px;
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: none;
+  border-bottom: 1px solid #ff7200;
+  background: transparent;
+  color: #fff;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  outline: none;
+}
+
+input[type="email"]::placeholder,
+input[type="password"]::placeholder {
+  color: #fff;
+}
+
+.btnn {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ff7200;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btnn:hover {
+  background-color: #ff5f00;
+}
+
+.link a {
+  text-decoration: none;
+  color: #ff7200;
+  font-weight: bold;
+}
+
+.liw {
+  font-size: 14px;
+  margin-top: 15px;
+}
+
+/* Icon styles */
+.icon ion-icon {
+  font-size: 25px;
+  transition: color 0.3s ease;
+}
+
+.icon a:hover ion-icon {
+  color: #ff7200;
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="navbar">
+            <div class="icon">
+                <h2 class="logo">KAVA</h2>
+            </div>
+            <div class="menu">
+                <ul>
+                    <li><a href="{{ url_for('home') }}">HOME</a></li>
+                    <li><a href="#">ABOUT</a></li>
+                    <li><a href="#">SERVICE</a></li>
+                    <li><a href="#">DESIGN</a></li>
+                    <li><a href="#">CONTACT</a></li>
+                </ul>
+            </div>
+            <div class="search">
+                <input class="srch" type="search" name="" placeholder="Search">
+                <a href="#"><button class="btn">Search</button></a>
+            </div>
+        </div>
+        <div class="content">
+            <h1>Farmer & Assistant System</h1>
+            <p class="par">Choose the correct crop to increase productivity. Represent crop statistical data for the whole nation. Display crop statistics using Google Maps and provide fertilizer and crop recommendations.</p>
+
+            <button class="cn"><a href="#">JOIN US</a></button>
+            <div class="form">
+                <h2>Login Here</h2>
+                <input type="email" name="email" placeholder="Enter Email">
+                <input type="password" name="" placeholder="Enter Password">
+                <button class="btnn"><a href="#">Login</a></button>
+
+                <p class="link">Don't have an account?<br>
+                    <a href="{{ url_for('register')}}">Sign up here</a>
+                </p>
+                <p class="liw">Log in with</p>
+
+                <div class="icon">
+                    <a href="#"><ion-icon name="logo-facebook"></ion-icon></a>
+                    <a href="#"><ion-icon name="logo-instagram"></ion-icon></a>
+                    <a href="#"><ion-icon name="logo-twitter"></ion-icon></a>
+                    <a href="#"><ion-icon name="logo-google"></ion-icon></a>
+                    <a href="#"><ion-icon name="logo-skype"></ion-icon></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Include Ionicons script -->
+    <script src="https://cdn.jsdelivr.net/npm/ionicons/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>
