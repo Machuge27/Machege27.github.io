@@ -1,0 +1,24 @@
+Column1,Column2,Column3,Column4,Column5,Column6,Column7,Column8
+County,Sub County,Temperature (øC),Rainfall (mm),Best Plants,,,
+Nairobi,Dagoreti North,18-25,900-1200,Maize, beans, potatoes,
+Nairobi,Westlands,18-25,900-1200,Spinach, kales, tomatoes, carrots
+Nairobi,Embakasi East,18-25,900-1200,Cabbages, onions, peas, lettuce
+Nairobi,Kasarani,18-25,900-1200,Strawberries, peppers, radishes,
+Mombasa,Mvita,25-32,800-1000,Mangoes, cashew nuts, coconut,
+Mombasa,Changamwe,25-32,800-1000,Bananas, pineapples, cassava, papayas
+Mombasa,Likoni,25-32,800-1000,Watermelons, sweet potatoes, avocados,
+Kisumu,Kisumu Central,20-28,1000-1400,Sugarcane, rice, fish farming, sorghum
+Kisumu, Nyando,20-28,1000-1400,Beans, maize, millet, sunflowers
+Kisumu, Seme,20-28,1000-1400,Tomatoes, kale, spinach, cowpeas
+Nakuru,Nakuru West,15-28,800-1000,Carrots, onions, cabbages, peas
+Nakuru,Gilgil,15-28,800-1000,Flowers, peas, tomatoes, potatoes
+Nakuru,Naivasha,15-28,800-1000,Roses, lilies, daisies, onions
+Machakos,Kangundo,20-28,600-900,Maize, beans, cowpeas, sweet potatoes
+Machakos,Masinga,20-28,600-900,Mangoes, oranges, guavas, passion fruits
+Machakos,Kathiani,20-28,600-900,Watermelons, tomatoes, onions, kales
+Eldoret,Uasin Gishu,15-27,1000-1300,Wheat, barley, sunflower, peas
+Eldoret,Moiben,15-27,1000-1300,Potatoes, maize, beans, pyrethrum
+Eldoret,Ainabkoi,15-27,1000-1300,Carrots, cabbages, onions, tomatoes
+Nyeri,Nyeri South,12-24,800-1200,Tea, coffee, potatoes, cabbages
+Nyeri,Nyeri Central,12-24,800-1200,Maize, beans, peas, wheat
+Nyeri,Tetu,12-24,800-1200,Dairy farming, vegetables, flowers, potatoes
