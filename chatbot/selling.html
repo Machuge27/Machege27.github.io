@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetGroceryl.</title>
+    <style>
+        * {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        body {
+            background: rgba(119, 170, 192, 0.487);
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+        }
+
+        .preview div {
+            border: 2px solid rgba(0, 0, 0, 0.87);
+            margin: 10px 15px;
+            min-height: 20px;
+        }
+
+        .main {
+            height: fit-content;
+        }
+
+        .footer {
+            min-height: 6rem;
+            background: linear-gradient(to top, rgba(51, 60, 187, 0.188), rgba(54, 234, 241, 0.115));
+            display: flex;
+            justify-content: space-between;
+            margin: 20px;
+        }
+
+        .footer .side {
+            min-width: fit-content;
+            display: flex;
+            bottom: 100px;
+        }
+
+        .footer .side ul li,
+        a,
+        h4 {
+            padding: 5px;
+            margin: 5px;
+            list-style: none;
+            font-weight: lighter;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            position: sticky;
+        }
+
+        input {
+            background: transparent;
+            border: none;
+        }
+
+        :where(body,
+            .section,
+            .sidebar, )::-webkit-scrollbar {
+            width: 6px;
+            height: 4px;
+            margin: 10px 0;
+        }
+
+        :where(body,
+            .section,
+            .sidebar, )::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 5px;
+        }
+
+        :where(body,
+            .section,
+            .sidebar, )::-webkit-scrollbar-thumb {
+            background: rgba(113, 110, 110, 0.727);
+            border-radius: 25px;
+        }
+
+        .section {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            border: 2px solid rgba(0, 0, 0, 0.036);
+            overflow-x: scroll;
+            white-space: nowrap;
+            margin: 10px 15px;
+            left: 30px;
+            scroll-behavior: smooth;
+        }
+
+        .item {
+            white-space: no-wrap;
+            width: 350px;
+            height: auto;
+            display: inline-block;
+            background-color: rgba(160, 219, 219, 0.336);
+            border-radius: 10px;
+            border: 1px solid rgba(130, 156, 133, 0.568);
+            padding: 5px;
+        }
+
+        .item button {
+            margin: 5px;
+            padding: 8px;
+            border-radius: 10px;
+            border: none;
+            background-color: rgba(45, 30, 177, 0.815);
+            color: antiquewhite;
+        }
+
+        .item img {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        .details {
+            display: flex;
+            flex-direction: row;
+            margin: 0;
+        }
+
+        h5 {
+            margin: 5px 5px 3px;
+            font-family: Verdana;
+        }
+
+        .preview {
+            min-height: 200px;
+            border: 1px solid rgb(27, 104, 104);
+            margin: 10px;
+            align-items: center;
+            display: flex;
+            flex-direction: row;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top">
+        <img src="static/icon1.PNG" alt="NA" width="30px" height="30px">
+        <label for="query">
+            <input type="Search" placeholder="Search">
+        </label>
+    </div>
+    <div class="preview">
+        <div class="previews">
+            <div></div>
+        </div>
+        <div class="previews">
+            <div></div>
+        </div>
+        <div class="previews">
+            <div></div>
+        </div>
+        <div class="previews"></div>
+    </div>
+    <div class="main">
+        <span>
+            <h4>Cereals</h4>
+        </span>
+        <div class="section" id="cereals-section">
+            <div class="items">
+                <div class="item">
+                    <img src="static/img1.jpg" alt="na">
+                    <h5>Name</h5>
+                    <div class="details">
+                        <h5>Price</h5>
+                        <h5>oldPrice</h5>
+                    </div>
+                    <button>Add to cart</button>
+                </div>
+            </div>
+        </div>
+
+        <span>
+            <h4>Veges</h4>
+        </span>
+        <div class="section">
+            <div class="items">
+                <div class="item">
+                    <img src="static/img1.jpg" alt="na">
+                    <h5>Name</h5>
+                    <div class="details">
+                        <h5>Price</h5>
+                        <h5>oldPrice</h5>
+                    </div>
+                    <button>Add to cart</button>
+                </div>
+                <div class="item">
+                    <img src="static/img1.jpg" alt="na">
+                    <h5>Name</h5>
+                    <div class="details">
+                        <h5>Price</h5>
+                        <h5>oldPrice</h5>
+                    </div>
+                    <button>Add to cart</button>
+                </div>
+                <div class="item">
+                    <img src="static/img1.jpg" alt="na">
+                    <h5>Name</h5>
+                    <div class="details">
+                        <h5>Price</h5>
+                        <h5>oldPrice</h5>
+                    </div>
+                    <button>Add to cart</button>
+                </div>
+                <div class="item">
+                    <img src="static/img1.jpg" alt="na">
+                    <h5>Name</h5>
+                    <div class="details">
+                        <h5>Price</h5>
+                        <h5>oldPrice</h5>
+                    </div>
+                    <button>Add to cart</button>
+                </div>
+                <div class="item">
+                    <img src="static/img1.jpg" alt="na">
+                    <h5>Name</h5>
+                    <div class="details">
+                        <h5>Price</h5>
+                        <h5>oldPrice</h5>
+                    </div>
+                    <button>Add to cart</button>
+                </div>
+                <div class="item">
+                    <img src="static/img1.jpg" alt="na">
+                    <h5>Name</h5>
+                    <div class="details">
+                        <h5>Price</h5>
+                        <h5>oldPrice</h5>
+                    </div>
+                    <button>Add to cart</button>
+                </div>
+                <div class="item">
+                    <img src="static/img1.jpg" alt="na">
+                    <h5>Name</h5>
+                    <div class="details">
+                        <h5>Price</h5>
+                        <h5>oldPrice</h5>
+                    </div>
+                    <button>Add to cart</button>
+                </div>
+                <div class="item">
+                    <img src="static/img1.jpg" alt="na">
+                    <h5>Name</h5>
+                    <div class="details">
+                        <h5>Price</h5>
+                        <h5>oldPrice</h5>
+                    </div>
+                    <button>Add to cart</button>
+                </div>
+
+            </div>
+        </div>
+
+        <span>
+            <h4>Fruits</h4>
+        </span>
+        <div class="section" id="fruits-section">
+    </div>
+    <div class="footer">
+        <div class="side">
+            <ul>
+                <li>
+                    <img src="static/icon1.PNG" alt="Logo">
+                    thans
+                </li>
+                <li>
+                    <img src="static/icon1.PNG" alt="Logo">to these
+                </li>
+            </ul>
+        </div>
+        <div class="side">
+            <ul>
+                <li><a href="#">FB</a></li>
+                <li><a href="#">FB</a></li>
+                <li><a href="#">FB</a></li>
+            </ul>
+        </div>
+        <div class="side">
+            <ul>
+                <li><a href="#">FB</a></li>
+                <li><a href="#">FB</a></li>
+                <li><a href="#">FB</a></li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Fetch products from Flask backend
+            fetchProducts("cereals"); // You may need to pass different categories here
+
+            function fetchProducts(category) {
+                // Make an AJAX request to Flask backend
+                fetch(`/api/products/${category}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Loop through each product and add it to the section
+                        data.forEach(product => {
+                            addItemToSection(category, product);
+                        });
+                    })
+                    .catch(error => console.error('Error fetching products:', error));
+            }
+
+            function addItemToSection(category, product) {
+                // Get the section element
+                const section = document.getElementById(`${category}-section`);
+
+                // Create item div
+                const itemDiv = document.createElement("div");
+                itemDiv.classList.add("item");
+
+                // Create img element
+                const img = document.createElement("img");
+                img.src = product.image;
+                img.alt = product.name;
+                itemDiv.appendChild(img);
+
+                // Create h5 for product name
+                const nameH5 = document.createElement("h5");
+                nameH5.textContent = product.name;
+                itemDiv.appendChild(nameH5);
+
+                // Create div for details
+                const detailsDiv = document.createElement("div");
+                detailsDiv.classList.add("details");
+
+                // Create h5 for price
+                const priceH5 = document.createElement("h5");
+                priceH5.textContent = "Price: " + product.price;
+                detailsDiv.appendChild(priceH5);
+
+                // Create h5 for old price
+                const oldPriceH5 = document.createElement("h5");
+                oldPriceH5.textContent = "Old Price: " + product.oldPrice;
+                detailsDiv.appendChild(oldPriceH5);
+
+                itemDiv.appendChild(detailsDiv);
+
+                // Create button for adding to cart
+                const addButton = document.createElement("button");
+                addButton.textContent = "Add to cart";
+                itemDiv.appendChild(addButton);
+
+                // Append item to section
+                section.querySelector(".items").appendChild(itemDiv);
+            }
+        });
+
+    </script>
+</body>
+
+</html>

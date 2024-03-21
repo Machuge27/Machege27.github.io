@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradient Box</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .box {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        .border {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            bottom: 0;
+            left: 0;
+            border-radius: inherit;
+            border: 5px solid;
+            /* Linear gradient color */
+            border-image: linear-gradient(to top right, #ff7e5f, #feb47b);
+            border-image-slice: 1;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        ul {
+            list-style: none;
+            padding: 5px 0;
+            width: 100%;
+            color: var(--icon-color);
+            margin: 0;
+            left: 0;
+            flex-grow: 1;
+            overflow-y: auto;
+            border-radius: 10px;
+        }
+
+        li {
+            padding: 10px 7px;
+            font-size: 12px;
+            font-family: pt mono;
+            color: var(--text-color);
+            border: 1px solid black;
+            cursor: pointer;
+            border-radius: 10px;
+            top: 40px;
+        }
+
+        svg {
+            height: 42px;
+            width: 23px;
+            color: blue;
+            cursor: pointer;
+        }
+        /* HTML: <div class="loader"></div> */
+.loader {
+    width: 4px;
+    color: #000;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    box-shadow: 
+      19px -19px 0 0px, 38px -19px 0 0px, 57px -19px 0 0px,
+      19px 0     0 5px, 38px 0     0 5px, 57px 0     0 5px,
+      19px 19px  0 0px, 38px 19px  0 0px, 57px 19px  0 0px;
+    transform: translateX(-38px);
+    animation: l26 2s infinite linear;
+  }
+  @keyframes l26 {
+    12.5% {box-shadow: 
+      19px -19px 0 0px, 38px -19px 0 0px, 57px -19px 0 5px,
+      19px 0     0 5px, 38px 0     0 0px, 57px 0     0 5px,
+      19px 19px  0 0px, 38px 19px  0 0px, 57px 19px  0 0px}
+    25%   {box-shadow: 
+      19px -19px 0 5px, 38px -19px 0 0px, 57px -19px 0 5px,
+      19px 0     0 0px, 38px 0     0 0px, 57px 0     0 0px,
+      19px 19px  0 0px, 38px 19px  0 5px, 57px 19px  0 0px}
+    50%   {box-shadow: 
+      19px -19px 0 5px, 38px -19px 0 5px, 57px -19px 0 0px,
+      19px 0     0 0px, 38px 0     0 0px, 57px 0     0 0px,
+      19px 19px  0 0px, 38px 19px  0 0px, 57px 19px  0 5px}
+    62.5% {box-shadow: 
+      19px -19px 0 0px, 38px -19px 0 0px, 57px -19px 0 0px,
+      19px 0     0 5px, 38px 0     0 0px, 57px 0     0 0px,
+      19px 19px  0 0px, 38px 19px  0 5px, 57px 19px  0 5px}
+    75%   {box-shadow: 
+      19px -19px 0 0px, 38px -19px 0 5px, 57px -19px 0 0px,
+      19px 0     0 0px, 38px 0     0 0px, 57px 0     0 5px,
+      19px 19px  0 0px, 38px 19px  0 0px, 57px 19px  0 5px}
+    87.5% {box-shadow: 
+      19px -19px 0 0px, 38px -19px 0 5px, 57px -19px 0 0px,
+      19px 0     0 0px, 38px 0     0 5px, 57px 0     0 0px,
+      19px 19px  0 5px, 38px 19px  0 0px, 57px 19px  0 0px}
+  }
+    </style>
+</head>
+
+<body>
+
+    <div class="box">
+        <div class="border">Hello</div>
+    </div><br>
+
+    <ul>
+        <li>Hellow world<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                    class="w-6 h-6">
+                    <path fill-rule="evenodd"
+                        d="M12.97 3.97a.75.75 0 0 1 1.06 0l7.5 7.5a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 1 1-1.06-1.06l6.22-6.22H3a.75.75 0 0 1 0-1.5h16.19l-6.22-6.22a.75.75 0 0 1 0-1.06Z"
+                        clip-rule="evenodd" />
+                </svg>
+                <svg id="delete-btn" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6 highlight-svg disabled">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                </svg>
+            </span></li>
+    </ul>
+    <div class="loader"></div>
+    <script>
+        const errorA = document.querySelector(".error");
+            const loader = `<div class="loader"></div>`; // Create loader element
+            const cont = document.getElementById("chats");
+            const hist = document.querySelector(".history"); // Remove dot from the ID selector
+            cont.style.display = "none";
+            const pele = document.createElement("p");
+            pele.textContent = "Your chats will appear here!";
+            errorA.appendChild(pele);
+            hist.innerHTML = loader; // Use innerHTML to set loader element
+            addSuggestions();
+    </script>
+</body>
+
+</html>

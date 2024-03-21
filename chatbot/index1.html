@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@Hilla</title>
+    <!-- <link rel="stylesheet" href="static/styles.css"> -->
+    <style>
+        * {
+            transition: 0.1s ease-in-out;
+            font-size: clamp(20px 8vw 30px);
+            /*font-size: clamp(0.8rem, 1.5vw, 1.2rem);*/
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            height: 100vh;
+            /*background: var(--outgoing-chat-bg);*/
+            background: var(--outgoing-chat-bg);
+        }
+
+        :root {
+            --text-color: #ffffff;
+            --icon-color: #acacbe;
+            --border-color: #acacbe;
+            --icon-hover-bg: #5b5e71;
+            --placeholder-color: #dcdcdc;
+            --outgoing-chat-bg: #343541;
+            --incoming-chat-bg: #444654;
+            --outgoing-chat-border: #343541;
+            --incoming-chat-border: #444654;
+            --incoming-chat-content-border: #0625ec;
+            --outgoing-chat-content-border: #09e1e9;
+            --bg: rgb(179, 59, 226);
+        }
+
+        .light-mode {
+            --text-color: #16171d;
+            --icon-color: #a9a9bc;
+            --border-color: #a9a9bc;
+            --icon-hover-bg: #e5e5f1;
+            --placeholder-color: #6c6c6c;
+            --outgoing-chat-bg: #ded9d9;
+            --incoming-chat-bg: #ded9d9;
+            --outgoing-chat-border: #e7e4e4;
+            --incoming-chat-border: #d9d9e3;
+            --incoming-chat-content-border: #3c3ce9;
+            --outgoing-chat-content-border: #4ac4d4;
+            --incoming-chat-content-border: #12125e;
+            --outgoing-chat-content-border: #13535c;
+            --bg: rgb(182, 144, 197);
+        }
+
+        /* Chats container styling */
+        .chat-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            overflow-y: auto;
+            height: calc(100vh - 8rem);
+            margin-bottom: 150px;
+            position: relative;
+            min-width: 75%;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .chat-container img {
+            border-radius: 20px;
+        }
+
+        :where(.chat-container,
+            .mid,
+            .sidebar,
+            textarea,
+            #chats)::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+            margin: 10px 0;
+        }
+
+        :where(.chat-container,
+            .mid,
+            .sidebar,
+            textarea,
+            #chats)::-webkit-scrollbar-track {
+            background: var(--incoming-chat-bg);
+            border-radius: 5px;
+        }
+
+        :where(.chat-container,
+            .mid,
+            .sidebar,
+            textarea,
+            #chats)::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 25px;
+        }
+
+        .default-text {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            height: 70vh;
+            padding: 0 10px;
+            text-align: center;
+            color: var(--text-color);
+        }
+
+        .default-text h1 {
+            font-size: clamp(2.5rem 3.3rem 4rem);
+            font-family: "Comic Sans MS";
+        }
+
+        .default-text p {
+            margin-top: 10px;
+            font-size: clamp(0.5rem 1.1rem 2rem);
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+        }
+
+        .chat-content {
+            border: 1px solid var(--icon-hover-bg);
+            transition: 0s;
+            border-radius: 10px;
+
+        }
+
+        .chat-container .chat {
+            padding: 25px 10px;
+            display: flex;
+            justify-content: center;
+            color: var(--text-color);
+        }
+
+        .chat-container .chat.outgoing {
+            background: var(--outgoing-chat-bg);
+            border: 1px solid var(--outgoing-chat-content-border);
+            width: 80%;
+            border-radius: 30px;
+            border-top-right-radius: 0;
+            margin: 10px 0;
+            margin-right: auto 1rem;
+        }
+        
+        .chat-container .chat.incoming {
+            background: var(--incoming-chat-bg);
+            border: 1px solid var(--incoming-chat-content-border);
+            width: 80%;
+            border-radius: 30px;
+            border-top-left-radius: 0;
+            margin: 10px 0;
+            margin-left: auto 1rem;
+        }
+
+        .chat .chat-content {
+            display: flex;
+            width: 80%;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+
+        .chat .chat-content span {
+            cursor: pointer;
+            font-size: 1.3rem;
+            color: var(--icon-color);
+            visibility: hidden;
+            border-color: var(--outgoing-chat-content-border);
+        }
+
+        .chat:hover .chat-content:not(:has(.typing-animation), :has(.error)) span {
+            visibility: visible;
+        }
+
+        .chat .chat-details {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .chat .chat-details img {
+            width: 35px;
+            height: 35px;
+            align-self: flex-start;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+         img {
+            border-radius: 10px;
+         }
+
+        .chat .chat-details p {
+            white-space: pre-wrap;
+            font-size: 1.05rem;
+            padding: 0 25px 0 25px;
+            color: var(--text-color);
+            word-break: break-word;
+            font-family: "Courier New", Courier, monospace;
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        .chat .chat-details p.error {
+            color: #dc2f40;
+            font-weight: bold;
+        }
+
+        .chat .typing-animation {
+            padding-left: 5px;
+            display: inline-flex;
+        }
+
+        .chat .chat-details .svg {
+            padding-left: 5px;
+            display: inline-flex;
+            transition: 0s;
+        }
+
+        .typing-animation .typing-dot {
+            height: 1px;
+            width: 1px;
+            border-radius: 50%;
+            margin: 0 3px;
+            opacity: 0.7;
+            background: var(--text-color);
+            animation: animateDots 1.5s var(--delay) ease-in-out infinite;
+        }
+
+        .typing-animation .typing-dot:first-child {
+            margin-left: 0;
+        }
+
+        @keyframes animateDots {
+
+            0%,
+            44% {
+                transform: translateY(0px);
+            }
+
+            28% {
+                opacity: 0.4;
+                transform: translateY(-6px);
+            }
+
+            44% {
+                opacity: 0.2;
+            }
+        }
+
+        .text-container {
+            width: 70%;
+            /* Set a maximum width for the container */
+            max-width: 70%;
+            /* Make the container take full width within its parent */
+            padding: 20px;
+            bottom: 30px;
+            position: fixed;
+            box-sizing: border-box;
+            justify-content: center;
+            align-content: center;
+            align-items: center;
+            border-radius: 10px;
+            display: flex;
+            max-height: 280px;
+            background: var(--outgoing-chat-bg);
+            border: 1px solid var(--border-color);
+            border-top: 1px solid var(--incoming-chat-border);
+        }
+
+        .text-container textarea {
+            min-width: 100%;
+            /* Make the textarea take full width of its container */
+            box-sizing: border-box;
+            /* Include padding in the total width */
+            padding: 15px 45px 15px 20px;
+            resize: none;
+            overflow-y: auto;
+            font-size: 16px;
+            font-weight: 500;
+            font-family: pt mono;
+            border: none;
+            max-height: 250px;
+            color: var(--text-color);
+            background: var(--incoming-chat-bg);
+            outline: 1px solid var(--incoming-chat-border);
+            border-radius: 6px;
+            border: 1px solid var(--icon-color);
+        }
+
+        .other-box {
+            /* Add styles for other boxes as needed */
+            color: var(--text-color);
+            height: 3rem;
+            border: 1px solid var(--icon-color);
+            margin: 3px 2px;
+            border-radius: 10px;
+            font-family: "Comic Sans MS";
+        }
+
+        .other-box:first-child {
+            display: flex;
+            flex-direction: row;
+            box-sizing: border-box;
+            align-items: center;
+            padding: 20px;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .other-box:hover {
+            background-color: var(--icon-hover-bg);
+        }
+
+        .other-box:last-child {
+            display: flex;
+            flex-direction: row;
+            box-sizing: border-box;
+            align-items: center;
+            padding: 20px;
+            justify-content: space-between;
+        }
+
+        .sidebar {
+            background: var(--outgoing-chat-bg);
+            width: 0;
+            height: 100vh;
+            overflow-x: hidden;
+            border-right: 1px solid #06ea3b;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+        }
+
+        .sidebar p {
+            padding: 0 10px;
+            color: var(--text-color);
+        }
+
+        button {
+            font-size: 20px;
+            cursor: pointer;
+            background-color: transparent;
+            color: var(--icon-color);
+            border: none;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            top: 0;
+        }
+
+        #main {
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            top: 0;
+            margin: 5px;
+            position: fixed;
+            height: 75vh;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #main * {
+            padding: 10px;
+        }
+
+        .text-container span {
+            width: 55px;
+            height: 55px;
+            display: flex;
+            border-radius: 4px;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            visibility: visible;
+            margin-left: 5px;
+        }
+
+        svg {
+            height: 42px;
+            width: 23px;
+            color: var(--text-color);
+            cursor: pointer;
+        }
+
+        svg:hover {
+            color: var(--text-color);
+            transition: 0s;
+            scale: 1.2;
+        }
+
+        span {
+            cursor: pointer;
+        }
+
+        .symbol {
+            font-size: 1rem !important;
+        }
+
+        #chat-input {
+            flex: 1;
+            padding-right: 45px;
+            box-sizing: border-box;
+        }
+
+        .del {
+            right: 20px;
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+            bottom: 20%;
+            width: 10px;
+            align-items: center;
+        }
+
+        .close {
+            left: 15px;
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            bottom: 20%;
+            width: 10px;
+            align-items: center;
+            flex: 1;
+            z-index: 1;
+        }
+
+        .highlight-svg {
+            cursor: pointer;
+        }
+
+        .disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .mid {
+            display: flex;
+            flex-grow: 1;
+            overflow-y: auto;
+            left: 0;
+            flex-direction: column;
+            position: relative;
+            min-height: 80%;
+        }
+
+        .mid p {
+            font-family: "Comic Sans MS";
+            color: var(--placeholder-color);
+            margin: 3px;
+            padding: 4px;
+        }
+
+        .mid ul {
+            list-style: none;
+            padding: 5px 0;
+            width: 100%;
+            color: var(--icon-color);
+            margin: 0;
+            left: 0;
+            flex-grow: 1;
+            overflow-y: auto;
+            border-radius: 10px;
+        }
+
+        .mid li {
+            padding: 10px 7px;
+            font-size: 12px;
+            font-family: pt mono;
+            color: var(--text-color);
+            border-bottom: 1px solid var(--incoming-chat-bg);
+            cursor: pointer;
+            border-radius: 10px;
+            top: 40px;
+        }
+
+        .mid li:hover {
+            background-color: var(--icon-hover-bg);
+        }
+
+        .history {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3px;
+            margin: 0 2px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            min-height: calc(100% - 90px);
+        }
+
+        .suggestion {
+            background-color: transparent;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            /* Two columns with equal width */
+            grid-gap: 20px 40px;
+            /* Gap between grid items */
+            padding: 30px;
+
+        }
+
+        .suggestion h4 {
+            padding: 10px;
+            cursor: pointer;
+            color: var(--text-color);
+            background: var(--incoming-chat-bg);
+            outline: 1px solid var(--incoming-chat-border);
+            border-radius: 6px;
+            margin: 0;
+            font-weight: lighter;
+            font-family: pt mono;
+        }
+
+        .suggestion h4:hover {
+            background-color: var(--icon-hover-bg);
+        }
+
+        #initials {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 40%;
+            background: var(--bg);
+            color: var(--text-color);
+            font: 0.8rem  "verdana" ;
+        }
+         /* HTML: <div class="loader"></div> */
+.loader {
+    align-self: center;
+    width: 4px;
+    color: #33edfa;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    display: flex;
+    box-shadow: 
+      19px -19px 0 0px, 38px -19px 0 0px, 57px -19px 0 0px,
+      19px 0     0 5px, 38px 0     0 5px, 57px 0     0 5px,
+      19px 19px  0 0px, 38px 19px  0 0px, 57px 19px  0 0px;
+    transform: translateX(-38px);
+    animation: l26 2s infinite linear;
+  }
+  @keyframes l26 {
+    12.5% {box-shadow: 
+      19px -19px 0 0px, 38px -19px 0 0px, 57px -19px 0 5px,
+      19px 0     0 5px, 38px 0     0 0px, 57px 0     0 5px,
+      19px 19px  0 0px, 38px 19px  0 0px, 57px 19px  0 0px}
+    25%   {box-shadow: 
+      19px -19px 0 5px, 38px -19px 0 0px, 57px -19px 0 5px,
+      19px 0     0 0px, 38px 0     0 0px, 57px 0     0 0px,
+      19px 19px  0 0px, 38px 19px  0 5px, 57px 19px  0 0px}
+    50%   {box-shadow: 
+      19px -19px 0 5px, 38px -19px 0 5px, 57px -19px 0 0px,
+      19px 0     0 0px, 38px 0     0 0px, 57px 0     0 0px,
+      19px 19px  0 0px, 38px 19px  0 0px, 57px 19px  0 5px}
+    62.5% {box-shadow: 
+      19px -19px 0 0px, 38px -19px 0 0px, 57px -19px 0 0px,
+      19px 0     0 5px, 38px 0     0 0px, 57px 0     0 0px,
+      19px 19px  0 0px, 38px 19px  0 5px, 57px 19px  0 5px}
+    75%   {box-shadow: 
+      19px -19px 0 0px, 38px -19px 0 5px, 57px -19px 0 0px,
+      19px 0     0 0px, 38px 0     0 0px, 57px 0     0 5px,
+      19px 19px  0 0px, 38px 19px  0 0px, 57px 19px  0 5px}
+    87.5% {box-shadow: 
+      19px -19px 0 0px, 38px -19px 0 5px, 57px -19px 0 0px,
+      19px 0     0 0px, 38px 0     0 5px, 57px 0     0 0px,
+      19px 19px  0 5px, 38px 19px  0 0px, 57px 19px  0 0px}
+  }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar" id="sb">
+        <div class="other-box" onclick="newChat()">
+            <span><img src="static/icon.PNG" style="height: 2rem; width: 2rem" alt=" chatbot-img" /></span>
+            <p>New chat.</p>
+            <span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                </svg></span>
+        </div>
+        <div class="mid">
+            <p style="border-bottom: 1px solid var(--border-color)">Chat history</p>
+            <div class="history">
+                <div class="error"></div>
+                <ul id="chats"></ul>
+            </div>
+            <p>
+                ©Mutai Hillary.
+            </p>
+        </div>
+        <div class="other-box">
+            <span>
+                <span id="initials">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                        <path fill-rule="evenodd"
+                            d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </span>
+            </span>
+            <p id="name">name</p>
+            <span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+                </svg>
+            </span>
+        </div>
+    </div>
+    <div>
+        <button title="Details">
+            <span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6 disabled" onclick="show()">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
+                </svg></span>
+        </button>
+        <div id="main">
+
+            <div class="close">
+                <span onclick="show()" id="close-btn" title="Sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-6 h-6" onclick="door()" id="open">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-6 h-6" onclick="door()" style="display: none" id="close">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />
+                    </svg>
+                </span>
+                <span title="Highlight">
+                    <svg onclick="highlight()" id="hl-btn" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                        class="w-6 h-6 highlight-svg disabled">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                    </svg>
+                </span>
+            </div>
+            <!-- Chats container -->
+            <div id="chatContainer" class="chat-container"></div>
+            <div class="text-container" id="tc">
+                <textarea id="chat-input" placeholder="Type something"></textarea><span id="send-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                        <path fill-rule="evenodd"
+                            d="M12.97 3.97a.75.75 0 0 1 1.06 0l7.5 7.5a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 1 1-1.06-1.06l6.22-6.22H3a.75.75 0 0 1 0-1.5h16.19l-6.22-6.22a.75.75 0 0 1 0-1.06Z"
+                            clip-rule="evenodd" />
+                    </svg></span>
+            </div>
+            <div class="del">
+                <span id="theme-btn" title="Theme"><svg id="day-svg" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 clickable" onclick="toggleTheme()">
+                        <path
+                            d="M12 2.25a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75ZM7.5 12a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM18.894 6.166a.75.75 0 0 0-1.06-1.06l-1.591 1.59a.75.75 0 1 0 1.06 1.061l1.591-1.59ZM21.75 12a.75.75 0 0 1-.75.75h-2.25a.75.75 0 0 1 0-1.5H21a.75.75 0 0 1 .75.75ZM17.834 18.894a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 1 0-1.061 1.06l1.59 1.591ZM12 18a.75.75 0 0 1 .75.75V21a.75.75 0 0 1-1.5 0v-2.25A.75.75 0 0 1 12 18ZM7.758 17.303a.75.75 0 0 0-1.061-1.06l-1.591 1.59a.75.75 0 0 0 1.06 1.061l1.591-1.59ZM6 12a.75.75 0 0 1-.75.75H3a.75.75 0 0 1 0-1.5h2.25A.75.75 0 0 1 6 12ZM6.697 7.757a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 0 0-1.061 1.06l1.59 1.591Z" />
+                    </svg>
+                    <svg id="night-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6 clickable" onclick="toggleTheme()"
+                        style="display: none">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+                    </svg>
+                </span>
+                <span title="Delete chat"><svg id="delete-btn" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                        class="w-6 h-6 highlight-svg disabled">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                    </svg>
+                </span>
+            </div>
+        </div>
+
+        <script>
+            //remember to implement the svg fill
+            const sidebar = document.getElementById("sb");
+            const mainContent = document.getElementById("main");
+            const button = document.querySelector("button");
+            const textarea = document.querySelector("textarea");
+            const tc = document.getElementById("tc");
+            const chatInput = document.querySelector("#chat-input");
+            const themeButton = document.querySelector("#theme-btn");
+            const sendButton = document.querySelector("#send-btn");
+            const chatContainer = document.querySelector(".chat-container");
+            const deleteButton = document.querySelector("#delete-btn");
+            const defaultText = `<div class="default-text">
+              <img src="static/icon1.PNG" alt="N/A">
+      <h1>How can i assist you today?</h1>
+      <p>Start a conversation and explore the power of AI.<br> Your dialog will be appear here.</p>
+      <div class="suggestion"></div>
+      </div>`;
+     
+            const name = document.querySelector("#name");
+            name.textContent = "Mitai Hillary.";
+
+            function getInitials() {
+                const name = document.querySelector("#name").textContent;
+                const words = name.split(" ");
+                const initials = words
+                    .slice(0, 2)
+                    .map(word => word.charAt(0))
+                    .join("");
+                const initialsSpan = document.querySelector("#initials");
+                initialsSpan.textContent = initials;
+            }
+            getInitials();
+            let userText = null;
+            conversation_id = null;
+            // Load theme from local storage and apply on the page
+            const themeColor = localStorage.getItem("themeColor");
+
+            document.body.classList.toggle("light-mode", themeColor === "light_mode");
+            // Define your list of strings
+            const list = [
+                "Hello there String 1",
+                "Good morningString 2",
+                "String 3",
+                "String 4",
+                "Hello String 6",
+                "String 7",
+                "Good boy String 9",
+                "String 410",
+                "Goodbye String 5"
+            ];
+
+            // Function to randomly select four strings from the list and append them to elements with class 'suggestion'
+            function addSuggestions() {
+                // Select the elements with class 'suggestion'
+                const suggestionClass =
+                    document.querySelector(".suggestion");
+                // Randomly select four strings from the list
+                const shuffledlits = list.sort(() => Math.random() - 0.5);
+
+                const selectedStrings = shuffledlits.slice(0, 4);
+
+                selectedStrings.forEach(function (string) {
+                    var h4Element = document.createElement("h4");
+                    h4Element.textContent = string;
+                    h4Element.addEventListener('click', show());
+                    h4Element.addEventListener('click', () => {
+                        userText = event.target.textContent;
+                        textarea.textContent = userText;
+                        handleOutgoingChat();
+                        //show();
+                    });
+                    suggestionClass.appendChild(h4Element)
+                });
+            }
+            window.onload = function () {
+                addSuggestions();
+            };
+
+            // Function to fetch conversation data from Flask app and display the titles
+            function fetchConversations() {
+                fetch("/conversations")
+                .then((response) => {
+                    const contentType = response.headers.get("content-type");
+                    if (contentType && contentType.includes("application/json")) {
+                        return response.json();
+                    } else {
+                        const errorA = document.querySelector(".error");
+                        const loader = `<div class="loader"></div><br> <br><p>Your chats will appear here!</p>`; // Create loader element
+                        const cont = document.getElementById("chats");
+                        const hist = document.querySelector(".history"); // Remove dot from the ID selector
+                        hist.innerHTML = loader; // Use innerHTML to set loader element
+        
+                        // Add event listener for when the DOM content is loaded
+                        document.addEventListener("DOMContentLoaded", function() {
+                            // Display the content after 4 seconds
+                            setTimeout(function() {
+                                cont.style.display = "block";
+                                addSuggestions();
+                            }, 4000);
+                        });
+                    }
+                    //throw new TypeError("Oops, we haven't got JSON!");
+                })
+                    .then((data) => {
+                        // Display titles
+                        const titlesDiv = document.getElementById("chats");
+                        data.forEach((conversation) => {
+                            //conversation_id = conversation.id;
+                            const titleDiv = document.createElement("li");
+                            titleDiv.textContent = conversation.title;
+                            // Add event listener to show details when clicked
+                            titleDiv.addEventListener("click", () => {
+                                conversation_id = conversation.conversation_id;
+                                displayDetails(conversation);
+                            });
+                            titlesDiv.appendChild(titleDiv);
+                        });
+                        addSuggestions();
+                    })
+                    .catch(
+                        (error) => {
+                            //const pele = document.createElement("p");
+                            //pele.textContent = "Error fetching conversations!";
+                            //errorA.appendChild(pele);
+                            console.error("Error fetching conversations:", error) // this line can also throw, e.g. when console = {}
+                        }
+                    );
+            }
+
+            // Function to display details when a title is clicked
+            function displayDetails(conversation) {
+                const chatContainer = document.querySelector(".chat-container");
+                const chat_id = conversation_id;
+
+                // Clear existing content in the chatContainer
+                chatContainer.innerHTML = "";
+
+                // Alternate between messages and responses
+                for (
+                    let i = 0;
+                    i <
+                    Math.max(conversation.messages.length, conversation.responses.length);
+                    i++
+                ) {
+                    // Add message if available
+                    if (i < conversation.messages.length) {
+                        const messageDiv = document.createElement("p");
+                        messageDiv.classList.add("message");
+                        messageDiv.textContent = conversation.messages[i];
+                        // Create outgoing chat element and append it to the chat container
+                        const html = `<div class="chat-content">
+                          <div class="chat-details">
+                          <img src="static/icon1.PNG" alt="user-img">
+                          <p>${messageDiv.textContent}</p>
+                        </div>
+                        <span onclick=""><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                        </svg></span>
+                        </div>`;
+                        const outgoingChatDiv = createChatElement(html, "outgoing");
+                        chatContainer.appendChild(outgoingChatDiv);
+                        chatContainer.scrollTo(0, chatContainer.scrollHeight);
+                    }
+
+                    // Add response if available
+                    if (i < conversation.responses.length) {
+                        const responseDiv = document.createElement("p");
+                        responseDiv.classList.add("response");
+                        responseDiv.textContent = conversation.responses[i];
+                        const html = `<div class="chat-content">
+                    <div class="chat-details">
+                    <img src="static/icon.PNG" alt="N/A">
+                    <p>${responseDiv.textContent}</p>
+                    </div>
+                    <span onclick="copyResponse(this)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                      stroke="currentColor" class="w-6 h-6">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" />
+                  </svg></span>
+                    </div>`;
+                        // Create an incoming chat div with typing animation and append it to chat container
+                        const incomingChatDiv = createChatElement(html, "incoming");
+                        chatContainer.appendChild(incomingChatDiv);
+                        chatContainer.scrollTo(0, chatContainer.scrollHeight);
+                    }
+                }
+            }
+
+            //window.onload = setInterval(fetchConversations, 2000);
+            (window.onload = fetchConversations), 2000;
+
+            name.textContent = "Mitai Hillary.";
+
+            function checkWidth() {
+
+                // Check the width of the window
+                var windowWidth = window.innerWidth || document.documentElement.clientWidth;
+                if (windowWidth > 886) {
+                    sidebar.style.width = "250px";
+                    mainContent.style.marginLeft = "250px";
+                    mainContent.style.width = "calc(100% - 250px)";
+                    button.style.marginLeft = "250px";
+                    textarea.style.width = "calc(100% - 250px)"; // Adjust textarea width when sidebar is open
+                    tc.style.width = "calc(100% - 260px)"; // Adjust textarea width when sidebar is open
+                } else {
+                    sidebar.style.width = "0";
+                    mainContent.style.marginLeft = "0";
+                    mainContent.style.width = "100%";
+                    button.style.marginLeft = "0";
+                    textarea.style.width = "100%"; // Adjust textarea width when sidebar is closed
+                    tc.style.width = "100%"; // Adjust textarea width when sidebar is closed
+                }
+            }
+            // Event listener for window resize
+            setInterval(window.addEventListener('resize', checkWidth), 200);
+            show();
+
+
+            function show() {
+                var windowWidth = window.innerWidth || document.documentElement.clientWidth;
+                // Toggle the width of the sidebar
+                if (sidebar.style.width === "250px") {
+                    sidebar.style.width = "0";
+                    mainContent.style.marginLeft = "0";
+                    mainContent.style.width = "100%";
+                    button.style.marginLeft = "0";
+                    textarea.style.width = "100%"; // Adjust textarea width when sidebar is closed
+                    tc.style.width = "100%"; // Adjust textarea width when sidebar is closed
+                } else if (sidebar.style.width !== "250px") {
+                    sidebar.style.width = "250px";
+                    mainContent.style.marginLeft = "250px";
+                    mainContent.style.width = "calc(100% - 250px)";
+                    button.style.marginLeft = "250px";
+                    textarea.style.width = "calc(100% - 250px)"; // Adjust textarea width when sidebar is open
+                    tc.style.width = "calc(100% - 260px)"; // Adjust textarea width when sidebar is open
+                }
+            }
+            chatContainer.innerHTML = "";
+
+            const initialInputHeight = chatInput.scrollHeight;
+
+            chatInput.addEventListener("input", () => {
+                //adjust the height dynamically
+                chatInput.style.height = `${initialInputHeight}px`;
+                chatInput.style.height = `${chatInput.scrollHeight}px`;
+            });
+
+            const loadDataFromLocalstorage = () => {
+                // Load saved chats and theme from local storage and apply/add on the page
+                chatContainer.innerHTML = defaultText; // || localStorage.getItem("all-chats");
+
+                chatContainer.scrollTo(0, chatContainer.scrollHeight); // Scroll to bottom of the chat container
+            };
+            const createChatElement = (content, className) => {
+                // Create new div and apply chat, specified class and set html content of div
+                const chatDiv = document.createElement("div");
+                chatDiv.classList.add("chat", className);
+                chatDiv.innerHTML = content;
+                return chatDiv; // Return the created chat div
+            };
+            themeButton.addEventListener("click", () => {
+                // Toggle body's class for the theme mode and save the updated theme to the local storage
+                document.body.classList.toggle("light-mode");
+                localStorage.setItem("themeColor", themeButton.innerText);
+                //themeButton.innerText = document.body.classList.contains("light-mode") ? "dark_mode" : "light_mode";
+            });
+            function toggleTheme() {
+                var daySvg = document.getElementById("day-svg");
+                var nightSvg = document.getElementById("night-svg");
+
+                daySvg.style.display =
+                    daySvg.style.display === "none" ? "inline" : "none";
+                nightSvg.style.display =
+                    nightSvg.style.display === "none" ? "inline" : "none";
+
+            }
+
+            function door() {
+                var open = document.getElementById("open");
+                var close = document.getElementById("close");
+
+                if (sidebar.style.width !== "250px") {
+                    // Show the open button
+                    open.style.display = "inline";
+                    // Hide the close button
+                    close.style.display = "none";
+                } else {
+                    // Show the close button
+                    close.style.display = "inline";
+                    // Hide the open button
+                    open.style.display = "none";
+                }
+            }
+            setInterval(door, 20)
+
+            const copyResponse = (copyBtn) => {
+                const ctc = `<span onclick=""><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0 1 18 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3 1.5 1.5 3-3.75" />
+              </svg></span>`;
+                const done = `<span onclick=""><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                      stroke="currentColor" class="w-6 h-6">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                  </svg></span>`;
+                // Copy the text content of the response to the clipboard
+                const reponseTextElement = copyBtn.parentElement.querySelector("p");
+                navigator.clipboard.writeText(reponseTextElement.textContent);
+                copyBtn.innerHTML = done;
+                setTimeout(() => (copyBtn.innerHTML = ctc), 1000);
+            };
+
+            const getChatResponse = async (incomingChatDiv, userInput) => {
+                try {
+                    //Edit to fit yourr response😂😁
+                    // Send a POST request to the Flask server
+                    const message = chatInput.value.trim();
+                    const chat_id = conversation_id;
+                    const response = await fetch("/process", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ message, chat_id }),
+                    });
+
+                    // Check if the request was successful
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+
+                    // Parse the response as JSON
+                    const responseData = await response.json();
+
+                    // Extract the response message from the response data
+                    const responseMessage = responseData.message;
+
+                    // Create a new paragraph element for the response
+                    const pElement = document.createElement("p");
+                    pElement.textContent = responseMessage;
+
+                    incomingChatDiv.querySelector(".typing-animation").remove();
+                    incomingChatDiv.querySelector(".chat-details").appendChild(pElement);
+                    chatInput.value = "";
+                    // Append the response paragraph to the chat container
+                    //const chatContainer = document.querySelector(".chat-container");
+                    //pElement.appendChild(pElement);
+
+                    // Scroll to the bottom of the chat container
+                    chatContainer.scrollTo(0, chatContainer.scrollHeight);
+                } catch (error) {
+                    console.error("Error:", error);
+                }
+            };
+
+            const showTypingAnimation = () => {
+                // Display the typing animation and call the getChatResponse function
+                const html = `<div class="chat-content">
+                      <div class="chat-details">
+                      <img src="static/icon.PNG" alt="N/A">
+                      <div class="typing-animation">
+                      <div class="typing-dot" style="--delay: 0.2s"></div>
+                      <div class="typing-dot" style="--delay: 0.3s"></div>
+                      <div class="typing-dot" style="--delay: 0.4s"></div>
+                      </div>
+                      </div>
+                      <span onclick="copyResponse(this)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" />
+                    </svg></span>
+                      </div>`;
+                // Create an incoming chat div with typing animation and append it to chat container
+                const incomingChatDiv = createChatElement(html, "incoming");
+                chatContainer.appendChild(incomingChatDiv);
+                chatContainer.scrollTo(0, chatContainer.scrollHeight);
+                getChatResponse(incomingChatDiv);
+            };
+            const handleOutgoingChat = () => {
+                userText = chatInput.value.trim(); // Get chatInput value and remove extra spaces
+                if (!userText) return; // If chatInput is empty return from here
+                // Clear the input field and reset its height
+                //chatInput.value = "";
+                chatInput.style.height = `${initialInputHeight}px`;
+                const html = `<div class="chat-content">
+                      <div class="chat-details">
+                      <img src="static/icon1.PNG" alt="user-img">
+                      <p>${userText}</p>
+                      </div>
+                      <span onclick=""><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                          stroke="currentColor" class="w-6 h-6">
+                          <path stroke-linecap="round" stroke-linejoin="round"
+                              d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                      </svg></span>
+                      </div>`;
+                // Create an outgoing chat div with user's message and append it to chat container
+                const outgoingChatDiv = createChatElement(html, "outgoing");
+                chatContainer.querySelector(".default-text")?.remove();
+                chatContainer.appendChild(outgoingChatDiv);
+                chatContainer.scrollTo(0, chatContainer.scrollHeight);
+                setTimeout(showTypingAnimation, 500);
+            };
+            deleteButton.addEventListener("click", () => {
+                // Send a request to the backend to delete the chats in the current chat id
+                if (confirm("Are you sure you want to delete all the chats?")) {
+                    fetch("/delete-chats", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ chatId: conversation_id })
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                // Chats deleted successfully, call loadDataFromLocalstorage function
+                                //loadDataFromLocalstorage();
+                                console.log("Chats deleted successfully");
+                                location.reload(); // Reload the page
+                            } else {
+                                throw new Error("Failed to delete chats");
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error:", error);
+                        });
+                }
+            });
+
+            loadDataFromLocalstorage();
+            chatInput.addEventListener("keydown", (e) => {
+                // If the Enter key is pressed without Shift and the window width is larger
+                // than 800 pixels, handle the outgoing chat
+                if (e.key === "Enter" && !e.shiftKey && window.innerWidth > 800) {
+                    e.preventDefault();
+                    handleOutgoingChat();
+                }
+            });
+            sendButton.addEventListener("click", handleOutgoingChat);
+
+            function enableButton() {
+                var del = document.getElementById("delete-btn");
+                var hl = document.getElementById("hl-btn");
+                del.classList.remove("disabled");
+                hl.classList.remove("disabled");
+                del.style.cursor = "pointer";
+                hl.style.cursor = "pointer";
+            }
+
+            function checkChatContent() {
+                var chatContainer = document.getElementById("chatContainer");
+                var del = document.getElementById("delete-btn");
+                var hl = document.getElementById("hl-btn");
+
+                // If chatContainer contains chat-content, enable the button
+                if (chatContainer.querySelector(".chat-content")) {
+                    enableButton();
+                } else {
+                    // If chat-content is not present, disable the button
+                    del.classList.add("disabled");
+                    hl.classList.add("disabled");
+                    del.style.cursor = "default";
+                    hl.style.cursor = "default";
+                }
+            }
+
+            // Trigger the function every 1000 milliseconds (1 second)
+            setInterval(checkChatContent, 1000); // call the func
+
+            // Use MutationObserver to observe changes in the chatContainer
+            var observer = new MutationObserver(function (mutations) {
+                mutations.forEach(function (mutation) {
+                    if (mutation.type === "childList") {
+                        // If child nodes have changed, check chat content
+                        checkChatContent();
+                    }
+                });
+            });
+
+            // Start observing the chatContainer for changes in child nodes
+            observer.observe(document.getElementById("chatContainer"), {
+                childList: true,
+            });
+
+            //New chat implementation
+            function newChat() {
+                const chatContainer = document.querySelector(".chat-container");
+                // Select all child elements under the chatContainer
+                const childElements = chatContainer.querySelectorAll("*");
+                // Remove each child element
+                childElements.forEach((child) => {
+                    child.remove();
+                });
+                chatContainer.innerHTML = defaultText; // || localStorage.getItem("all-chats");
+                //set conversation id to null
+                conversation_id = null;
+                chatContainer.scrollTo(0, chatContainer.scrollHeight); // Scroll to bottom of the chat container
+                addSuggestions();
+            }
+        </script>
+
+        <script>
+            //Script to simulate adding chat content
+            function addChatContent() {
+                var chatContainer = document.getElementById("chatContainer");
+                var chatContent = document.createElement("div");
+                chatContent.id = "chat-content";
+                chatContainer.appendChild(chatContent);
+            }
+
+            // Simulate adding chat content after 3 seconds
+            //setTimeout(addChatContent, 3000);
+        </script>
+</body>
+
+</html>

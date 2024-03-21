@@ -1,0 +1,31 @@
+{
+  "folders": [
+	{
+		"name": "chatbot",
+		"path": ".."
+	},
+	{
+		"name": "carousel",
+		"path": "C:/VSCodes/HTML/bootstrap-5.0.2-examples/carousel"
+	}
+],
+  "settings": {
+    "sqltools.connections": [
+      {
+        "mysqlOptions": {
+          "authProtocol": "xprotocol",
+          "enableSsl": "Disabled"
+        },
+        "previewLimit": 50,
+        "server": "localhost",
+        "port": 33060,
+        "driver": "MySQL",
+        "name": "conn",
+        "database": "users",
+        "username": "root",
+        "connectionTimeout": 30000,
+        "password": ""
+      }
+    ]
+  }
+}

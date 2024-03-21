@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Register</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+
+        .tags {
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="login-form">
+        <h2>Login</h2>
+        <form id="login-form">
+            <input type="email" name="email" placeholder="Email">
+            <input type="password" name="password" placeholder="Password">
+            <button type="button" onclick="submitForm('login')">Login</button>
+        </form>
+        <p>Don't have an account? <a href="#" onclick="toggleForm()">Register here</a></p>
+    </div>
+
+    <div id="register-form" class="hidden">
+        <h2>Register</h2>
+        <form id="register-form">
+            <input type="text" name="fullname" placeholder="Full Name">
+            <input type="email" name="email" placeholder="Email">
+            <input type="password" name="password" placeholder="Password">
+            <button type="button" onclick="submitForm('register')">Register</button>
+        </form>
+        <p>Already have an account? <a href="#" onclick="toggleForm()">Login here</a></p>
+    </div>
+    <div class="tags">
+        <pre> cp <var>source-file</var> <var>dest-file</var> </pre> replacing the <var> source-file</var>
+        <code>hello there Code </code><br>
+        <em>hello there Emphasis</em><br>
+        <cite>hello there</cite><br>
+        <kbd>Keyboard hello there</kbd><br>
+        <samp>samp hello there</samp><br>
+        <strong>strong hello there</strong><br>
+        <b>big hello there</b><br>
+        <blink>blinkig hello there</blink><br>
+    </div>
+
+    <script>
+        function toggleForm() {
+            var loginForm = document.getElementById("login-form");
+            var registerForm = document.getElementById("register-form");
+
+            loginForm.classList.toggle("hidden");
+            registerForm.classList.toggle("hidden");
+        }
+
+        function submitForm(formType) {
+            var formData;
+            if (formType === 'login') {
+                formData = new FormData(document.getElementById("login-form"));
+            } else if (formType === 'register') {
+                formData = new FormData(document.getElementById("register-form"));
+            }
+
+            fetch(formType === 'login' ? "/login" : "/register", {
+                method: "POST",
+                body: formData
+            }).then(function (response) {
+                if (response.ok) {
+                    window.location.href = "/"; // Redirect to home page after successful login or registration
+                } else {
+                    console.error(formType === 'login' ? "Login failed" : "Registration failed");
+                }
+            }).catch(function (error) {
+                console.error("Error:", error);
+            });
+        }
+    </script>
+</body>
+
+</html>
+
+<!-- frames
+    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/htm
+<HTML> <HEAD> <TITLE>
+A simple frameset document
+</TITLE> </HEAD> <FRAMESET cols=" 20%, 80%">
+<FRAMESET rows="100, 200">
+    <FRAME src="contents_of_frame1.html">
+        <FRAME src="contents_of_frame2.gif">
+</FRAMESET>
+<FRAME src="contents_of_frame3.html">
+    <NOFRAMES>
+        <P>This frameset document contains:
+        <UL>
+            <LI><A href="contents_of_frame1.html">
+                    Some neat contents</A>
+            <LI><IMG src="contents_of_frame2.gif" alt="A neat im-age">
+            <LI><A href="contents_of_frame3.html">Some other neat contents</A>
+        </UL>
+    </NOFRAMES>
+    </FRAMESET>
+
+    </HTML>
+    frames -->

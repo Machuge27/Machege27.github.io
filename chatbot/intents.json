@@ -1,0 +1,442 @@
+{
+  "intents": [
+    {
+      "mytag": "greeting",
+      "patterns": ["Hello", "Hi", "Greetings"],
+      "responses": [
+        "Hello! How can I help you with your agricultural needs today?"
+      ]
+    },
+    {
+      "mytag": "crop_monitoring",
+      "patterns": [
+        "Monitor {crop} growth",
+        "Check {crop} health",
+        "How are my {crop} doing?",
+        "Provide {crop} status"
+      ],
+      "responses": [
+        "Analyzing {crop} growth and health. Provide specific details or ask for a summary."
+      ]
+    },
+    {
+      "mytag": "weather_integration",
+      "patterns": [
+        "How is the weather affecting my crops?",
+        "Give me weather insights",
+        "Weather conditions for my farm"
+      ],
+      "responses": [
+        "Fetching real-time weather data. Specify the crop or region for more accurate insights."
+      ]
+    },
+    {
+      "mytag": "resource_optimization",
+      "patterns": [
+        "Optimize water usage for {crop}",
+        "Suggest fertilizer adjustments for {crop}",
+        "Improve resource efficiency for {crop}"
+      ],
+      "responses": [
+        "Recommendations for optimizing {resource} for {crop}. Please confirm or make adjustments."
+      ]
+    },
+    {
+      "mytag": "crop_prediction",
+      "patterns": [
+        "Predict yield for {crop}",
+        "Forecast {crop} harvest",
+        "Estimate {crop} production"
+      ],
+      "responses": [
+        "Utilizing predictive analytics for {crop}. Specify a time frame for the prediction."
+      ]
+    },
+    {
+      "mytag": "pest_detection",
+      "patterns": [
+        "Identify pests in {crop}",
+        "Detect diseases in {crop}",
+        "How to control {pest} in {crop}"
+      ],
+      "responses": [
+        "Scanning for pests and diseases in {crop}. Report any specific symptoms for accurate identification."
+      ]
+    },
+    {
+      "mytag": "automation",
+      "patterns": [
+        "Automate {task} in the field",
+        "Integrate with {robotic equipment}",
+        "Implement automation for {crop}"
+      ],
+      "responses": [
+        "Exploring automation options. Please provide details on the task or equipment."
+      ]
+    },
+    {
+      "mytag": "data_security",
+      "patterns": [
+        "How is my data secured?",
+        "Privacy measures for my farm data"
+      ],
+      "responses": [
+        "Ensuring data security with {encryption/authentication measures}. Any specific concerns or preferences?"
+      ]
+    },
+    {
+      "mytag": "user_interface",
+      "patterns": ["Improve user interface", "Can I access data on my mobile?"],
+      "responses": [
+        "Optimizing user interface. What specific improvements would you like to see? Mobile access is available."
+      ]
+    },
+    {
+      "mytag": "training_support",
+      "patterns": ["How to train the AI?", "Onboarding process"],
+      "responses": [
+        "Providing training resources. Specify your level of expertise or ask for onboarding guidance."
+      ]
+    },
+    {
+      "mytag": "precision_agriculture",
+      "patterns": [
+        "Integrate with precision farming",
+        "Compatibility with precision tools"
+      ],
+      "responses": [
+        "Exploring precision agriculture integration. Please specify the tools or techniques you use."
+      ]
+    },
+    {
+      "mytag": "welcoming",
+      "patterns": ["Hey there", "Good day", "Greetings"],
+      "responses": [
+        "Welcome! How can I assist you with your agricultural queries today?"
+      ]
+    },
+    {
+      "mytag": "soil_analysis",
+      "patterns": [
+        "Conduct soil analysis for {crop}",
+        "Check soil health for {crop}",
+        "What nutrients does my soil need?"
+      ],
+      "responses": [
+        "Performing soil analysis for {crop}. Please provide information on your soil type or ask for general recommendations."
+      ]
+    },
+    {
+      "mytag": "irrigation_management",
+      "patterns": [
+        "Optimize irrigation for {crop}",
+        "How much water does {crop} need?",
+        "Recommendations for efficient irrigation"
+      ],
+      "responses": [
+        "Providing irrigation recommendations for {crop}. Consider factors such as soil type and weather conditions for accurate guidance."
+      ]
+    },
+    {
+      "mytag": "harvest_planning",
+      "patterns": [
+        "Plan {crop} harvest",
+        "Harvesting guidelines for {crop}",
+        "When is the best time to harvest {crop}?"
+      ],
+      "responses": [
+        "Assisting with {crop} harvest planning. Specify your location or ask for general recommendations."
+      ]
+    },
+    {
+      "mytag": "livestock_management",
+      "patterns": [
+        "Manage livestock health",
+        "Optimize feed for cattle",
+        "How to prevent diseases in poultry?"
+      ],
+      "responses": [
+        "Providing insights on livestock management. Specify the type of livestock or ask for general advice."
+      ]
+    },
+    {
+      "mytag": "crop_market_analysis",
+      "patterns": [
+        "Market analysis for {crop}",
+        "Current crop prices",
+        "Best markets for selling {crop}"
+      ],
+      "responses": [
+        "Analyzing the market for {crop}. Specify your location or ask for general market trends."
+      ]
+    },
+    {
+      "mytag": "agri_tech_integration",
+      "patterns": [
+        "Integrate with agricultural technology",
+        "Compatibility with smart farm equipment"
+      ],
+      "responses": [
+        "Exploring integration with agricultural technology. Please specify the equipment or technologies you use."
+      ]
+    },
+    {
+      "mytag": "data_privacy",
+      "patterns": [
+        "How is my agricultural data protected?",
+        "Privacy measures for farm data"
+      ],
+      "responses": [
+        "Ensuring data privacy with advanced security measures. Any specific concerns or preferences you would like to discuss?"
+      ]
+    },
+    {
+      "mytag": "mobile_app_access",
+      "patterns": ["Access data on my mobile", "Mobile-friendly interface"],
+      "responses": [
+        "Optimizing for mobile access. What specific features would you like to have on the mobile interface?"
+      ]
+    },
+    {
+      "mytag": "user_training",
+      "patterns": [
+        "Training resources for agricultural AI",
+        "How to get started with the AI"
+      ],
+      "responses": [
+        "Providing training resources for the agricultural AI. Specify your level of expertise or ask for onboarding guidance."
+      ]
+    },
+    {
+      "mytag": "seasonal_advice",
+      "patterns": [
+        "What tasks should I focus on this season?",
+        "Seasonal recommendations for {crop}",
+        "Optimal activities for the current season"
+      ],
+      "responses": [
+        "Providing seasonal advice for {crop}. What specific tasks or information are you looking for?"
+      ]
+    },
+    {
+      "mytag": "weed_management",
+      "patterns": [
+        "Control weeds in {crop}",
+        "Weed management strategies",
+        "Prevent weed growth in my fields"
+      ],
+      "responses": [
+        "Implementing strategies for weed management in {crop}. Please specify your field size or ask for general recommendations."
+      ]
+    },
+    {
+      "mytag": "market_trends",
+      "patterns": [
+        "Current agricultural market trends",
+        "Predictions for crop prices",
+        "Market analysis for farmers"
+      ],
+      "responses": [
+        "Analyzing current market trends. Specify the crop or region for more accurate insights."
+      ]
+    },
+    {
+      "mytag": "livestock_feed",
+      "patterns": [
+        "Optimize feed for {livestock}",
+        "Balanced diet for cattle",
+        "Nutritional requirements for poultry"
+      ],
+      "responses": [
+        "Providing insights on optimizing feed for {livestock}. Specify the type of livestock or ask for general advice."
+      ]
+    },
+    {
+      "mytag": "drought_management",
+      "patterns": [
+        "Manage crops during drought",
+        "Drought-resistant crops",
+        "Water conservation strategies"
+      ],
+      "responses": [
+        "Implementing strategies for managing crops during drought conditions. Please provide details about your location or ask for general recommendations."
+      ]
+    },
+    {
+      "mytag": "farm_expansion",
+      "patterns": [
+        "Planning farm expansion",
+        "Scaling up my agriculture business",
+        "Optimal strategies for farm growth"
+      ],
+      "responses": [
+        "Assisting with farm expansion planning. What specific information or guidance are you seeking?"
+      ]
+    },
+    {
+      "mytag": "crop_rotation",
+      "patterns": [
+        "Implement crop rotation",
+        "Benefits of crop rotation",
+        "Rotate crops for soil health"
+      ],
+      "responses": [
+        "Providing information on implementing crop rotation for improved soil health. Ask for specific crops or regions if needed."
+      ]
+    },
+    {
+      "mytag": "climate_resilience",
+      "patterns": [
+        "Build climate-resilient agriculture",
+        "Adapt to changing climate conditions",
+        "Strategies for climate resilience"
+      ],
+      "responses": [
+        "Exploring strategies for building climate-resilient agriculture. Specify your region or ask for general advice."
+      ]
+    },
+    {
+      "mytag": "harvest_quality",
+      "patterns": [
+        "Maintain crop quality during harvest",
+        "Post-harvest handling tips",
+        "Optimize harvest for quality"
+      ],
+      "responses": [
+        "Providing tips for maintaining crop quality during and after harvest. Specify the crop or ask for general recommendations."
+      ]
+    },
+    {
+      "mytag": "organic_farming",
+      "patterns": [
+        "Transition to organic farming",
+        "Benefits of organic agriculture",
+        "Organic farming practices"
+      ],
+      "responses": [
+        "Assisting with the transition to organic farming. What specific information or guidance are you seeking?"
+      ]
+    },
+    {
+      "mytag": "market_prices",
+      "patterns": [
+        "Current prices for agricultural products",
+        "Market rates for {crop}",
+        "How much can I sell {livestock} for?"
+      ],
+      "responses": [
+        "Providing information on current market prices. Specify the crop or livestock type for more accurate rates."
+      ]
+    },
+    {
+      "mytag": "fertilizer_recommendation",
+      "patterns": [
+        "Recommend fertilizer for {crop}",
+        "Best fertilizers for {crop} growth",
+        "How to improve soil fertility"
+      ],
+      "responses": [
+        "Providing fertilizer recommendations for {crop}. Consider factors such as soil type and crop smytage for accurate advice."
+      ]
+    },
+    {
+      "mytag": "irrigation_systems",
+      "patterns": [
+        "Selecting the right irrigation system",
+        "Best irrigation practices for {crop}",
+        "Efficient irrigation systems for farms"
+      ],
+      "responses": [
+        "Exploring irrigation system options. Please provide details about your farm size or ask for general recommendations."
+      ]
+    },
+    {
+      "mytag": "livestock_breeding",
+      "patterns": [
+        "Optimize breeding for {livestock}",
+        "Breeding strategies for cattle",
+        "Improving poultry breeding"
+      ],
+      "responses": [
+        "Providing insights on optimizing breeding for {livestock}. Specify the type of livestock or ask for general advice."
+      ]
+    },
+    {
+      "mytag": "greenhouse_management",
+      "patterns": [
+        "Manage crops in a greenhouse",
+        "Greenhouse farming tips",
+        "Optimal conditions for greenhouse crops"
+      ],
+      "responses": [
+        "Providing tips for managing crops in a greenhouse. Specify the crop or ask for general recommendations."
+      ]
+    },
+    {
+      "mytag": "farm_robotics",
+      "patterns": [
+        "Integrate robotics in farming",
+        "Robotics for crop cultivation",
+        "Automate farm tasks with robots"
+      ],
+      "responses": [
+        "Exploring robotics integration in farming. Please specify the tasks or equipment you want to automate."
+      ]
+    },
+    {
+      "mytag": "soil_erosion_prevention",
+      "patterns": [
+        "Prevent soil erosion in {crop}",
+        "Erosion control measures",
+        "Protecting soil during heavy rain"
+      ],
+      "responses": [
+        "Implementing strategies to prevent soil erosion in {crop}. Please provide details about your location or ask for general recommendations."
+      ]
+    },
+    {
+      "mytag": "agri_entrepreneurship",
+      "patterns": [
+        "Starting an agriculture business",
+        "Entrepreneurial tips for farmers",
+        "Business planning for agricultural ventures"
+      ],
+      "responses": [
+        "Assisting with agricultural entrepreneurship. What specific information or guidance are you seeking for your business?"
+      ]
+    },
+    {
+      "mytag": "precision_livestock_farming",
+      "patterns": [
+        "Implement precision livestock farming",
+        "Technologies for precision livestock management",
+        "Optimizing livestock health with technology"
+      ],
+      "responses": [
+        "Exploring precision livestock farming technologies. Please specify the tools or techniques you want to implement."
+      ]
+    },
+    {
+      "mytag": "organic_pest_control",
+      "patterns": [
+        "Natural pest control methods",
+        "Organic solutions for {pest} in {crop}",
+        "Pesticide-free farming tips"
+      ],
+      "responses": [
+        "Providing organic pest control methods for {crop}. Specify the pest or ask for general advice."
+      ]
+    },
+    {
+      "mytag": "food_safety",
+      "patterns": [
+        "Ensuring food safety on the farm",
+        "Safe handling practices for agricultural products",
+        "Quality assurance in farming"
+      ],
+      "responses": [
+        "Ensuring food safety through recommended handling practices. Specify the product or ask for general guidelines."
+      ]
+    }
+  ]
+}
