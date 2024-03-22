@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Page</title>
+    <style>
+      * {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+      }
+
+      body {
+        background: rgba(119, 170, 192, 0.487);
+        width: 100%;
+        position: fixed;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      .preview div {
+        border: 2px solid rgba(0, 0, 0, 0.87);
+        margin: 10px 15px;
+        min-height: 20px;
+      }
+
+      .main {
+        height: fit-content;
+      }
+
+      .footer {
+        min-height: 6rem;
+        background: linear-gradient(
+          to top,
+          rgba(51, 60, 187, 0.188),
+          rgba(54, 234, 241, 0.115)
+        );
+        display: flex;
+        justify-content: space-between;
+        margin: 20px;
+      }
+
+      .footer .side {
+        min-width: fit-content;
+        display: flex;
+        bottom: 100px;
+      }
+
+      .footer .side ul li,
+      a,
+      h4 {
+        padding: 5px;
+        margin: 5px;
+        list-style: none;
+        font-weight: lighter;
+      }
+
+      .top {
+        display: flex;
+        justify-content: space-between;
+        position: sticky;
+      }
+
+      input {
+        background: transparent;
+        border: none;
+      }
+
+      :where(body, .section, .sidebar, )::-webkit-scrollbar {
+        width: 6px;
+        height: 4px;
+        margin: 10px 0;
+      }
+
+      :where(body, .section, .sidebar, )::-webkit-scrollbar-track {
+        background: transparent;
+        border-radius: 5px;
+      }
+
+      :where(body, .section, .sidebar, )::-webkit-scrollbar-thumb {
+        background: rgba(113, 110, 110, 0.727);
+        border-radius: 25px;
+      }
+
+      .section {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        border: 2px solid rgba(0, 0, 0, 0.036);
+        overflow-x: scroll;
+        white-space: nowrap;
+        margin: 10px 15px;
+        left: 30px;
+        scroll-behavior: smooth;
+      }
+
+      .item {
+        white-space: no-wrap;
+        width: 350px;
+        height: auto;
+        display: inline-block;
+        background-color: rgba(160, 219, 219, 0.336);
+        border-radius: 10px;
+        border: 1px solid rgba(130, 156, 133, 0.568);
+        padding: 5px;
+      }
+
+      .item button {
+        margin: 5px;
+        padding: 8px;
+        border-radius: 10px;
+        border: none;
+        background-color: rgba(45, 30, 177, 0.815);
+        color: antiquewhite;
+      }
+
+      .item img {
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+      }
+
+      .details {
+        display: flex;
+        flex-direction: row;
+        margin: 0;
+      }
+
+      h5 {
+        margin: 5px 5px 3px;
+        font-family: Verdana;
+      }
+
+      .preview {
+        min-height: 200px;
+        border: 1px solid rgb(27, 104, 104);
+        margin: 10px;
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+      }
+    </style>
+  </head>
+  <body>
+      <span>
+        <h4>Cereals</h4>
+      </span>
+      <div class="section">
+      <div class="items" id="cereals-items"></div>
+    </div>
+
+    </div>
+      <span>
+        <h4>Fruits</h4>
+      </span>
+      <div class="section">
+        <div class="items" id="fruits-items"></div>
+    </div>
+
+    <!-- Repeat the above section for other categories if needed -->
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Include jQuery for AJAX requests -->
+    <script src="script.js"></script>
+    <!-- Include your JavaScript file here -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Make AJAX request to fetch products
+            fetch("/api/products")
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Iterate over the products and append them to the respective section
+                    data.forEach(product => {
+                        var productHTML = "<div class='item'>" +
+                                              "<img src='static/" + product.image + "' alt='Product Image'>" +
+                                              "<h5>" + product.name + "</h5>" +
+                                              "<div class='details'>" +
+                                                  "<h5>Price: $" + product.price.toFixed(2) + "</h5>";
+                                                  
+                                                  // Check if old price is available
+                                                  if (product.old_price) {
+                                                      productHTML += "<h5>Old Price: $" + product.old_price.toFixed(2) + "</h5>";
+                                                  }
+                                                  
+                                                  productHTML += "</div>" +
+                                              "<button>Add to cart</button>" +
+                                          "</div>";
+        
+                        // Get the category of the product
+                        var category = product.category.toLowerCase() + "-items";
+                        
+                        // Append the product to the respective section based on its category
+                        document.getElementById(category).insertAdjacentHTML("beforeend", productHTML);
+                    });
+                })
+                .catch(error => {
+                    console.error("Error fetching products:", error);
+                });
+        });
+        
+        
+    </script>
+    <!-- Include your JavaScript file here -->
+  </body>
+</html>

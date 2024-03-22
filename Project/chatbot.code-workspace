@@ -1,0 +1,29 @@
+{
+	"folders": [
+		{
+			"path": "D:/prototype/chatbot"
+		},
+		{
+			"path": "instance"
+		}
+	],
+	"settings": {
+		"sqltools.connections": [
+			{
+				"mysqlOptions": {
+					"authProtocol": "xprotocol",
+					"enableSsl": "Disabled"
+				},
+				"previewLimit": 50,
+				"server": "localhost",
+				"port": 33060,
+				"driver": "MySQL",
+				"name": "conn",
+				"database": "users",
+				"username": "root",
+				"connectionTimeout": 30000,
+				"password": ""
+			}
+		]
+	}
+}
